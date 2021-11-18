@@ -1,1 +1,8 @@
-["GithubDiscussions"]
+{
+  "GithubDiscussions": {
+    "name": "GitHub Discussions",
+    "author": "mktcode",
+    "version": 0.1,
+    "website": "https://github.com/snapshot-labs/snapshot/blob/develop/src/plugins/GithubDiscussions/README.md"
+  }
+}

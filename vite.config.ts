@@ -24,13 +24,28 @@ export default defineConfig({
       template: 'sunburst',
       gzipSize: true
     }),
-    () => { // create list of plugins from directories
+    () => {
+      // create list of plugins from plugin.json files in src/plugins
       fs.writeFileSync(
         'src/plugins/_plugins.json',
         JSON.stringify(
-          fs.readdirSync('src/plugins', { withFileTypes: true })
-          .filter(file => file.isDirectory())
-          .map(dir => dir.name)
+          Object.fromEntries(
+            fs.readdirSync('src/plugins', { withFileTypes: true })
+              .filter(file => file.isDirectory())
+              .map(dir => {
+                try {
+                  return [
+                    dir.name,
+                    JSON.parse(fs.readFileSync(`src/plugins/${dir.name}/plugin.json`, 'utf-8'))
+                  ];
+                } catch {
+                  return null;
+                }
+              })
+              .filter(plugin => plugin)
+          ),
+          null,
+          2
         )
       )
     }

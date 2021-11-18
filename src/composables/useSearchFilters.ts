@@ -45,7 +45,10 @@ export function useSearchFilters() {
       .filter(n => JSON.stringify(n).toLowerCase().includes(q.toLowerCase()))
       .sort((a, b) => b.spaces - a.spaces);
 
-  const filteredPlugins = (q = '') => plugins
+  const filteredPlugins = (q = '') =>
+    Object.keys(plugins)
+      .filter(key => JSON.stringify(plugins[key]).toLowerCase().includes(q.toLowerCase()))
+      .sort((a, b) => plugins[b].spaces - plugins[a].spaces);
 
   const minifiedValidationsArray = computed(() =>
     Object.keys(validations).map((key: any) => ({

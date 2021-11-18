@@ -282,9 +282,9 @@ onMounted(async () => {
       <div v-if="loaded && proposal.plugins">
         <component
           v-for="plugin in Object.keys(proposal.plugins)"
-          :is="getContentComponent(plugin)"
+          :is="getComponent(plugin, 'Content')"
           :proposal="proposal"
-        ></component>
+        />
       </div>
       <ProposalPluginsContent
         v-model:safeSnapInput="safeSnapInput"

@@ -1,38 +1,32 @@
-import plugins from '@/plugins/_plugins.json';
 import { defineAsyncComponent } from 'vue';
+import plugins from '@/plugins/_plugins.json';
+import { useApp } from '@/composables/useApp';
 
 export function usePlugins() {
+  const { explore } = useApp();
+
+  Object.keys(plugins).forEach(key => {
+    plugins[key].spaces = explore.value.plugins[key] ?? 0
+  })
 
   const usePlugin = async (plugin: string) =>
     (await import(`../plugins/${plugin}/index.ts`)).default();
 
 
-  const getTimelineComponent = (plugin: string) => {
+  const getComponent = (plugin: string, component: string) => {
     return defineAsyncComponent(() =>
-      import(`../plugins/${plugin}/Timeline.vue`)
+      import(`../plugins/${plugin}/${component}.vue`)
     );
   }
 
-  const getContentComponent = (plugin: string) => {
-    return defineAsyncComponent(() =>
-      import(`../plugins/${plugin}/Content.vue`)
-    );
-  }
-
-  const getLogoUrl = (plugin) => {
-    return `https://raw.githubusercontent.com/snapshot-labs/snapshot/master/src/plugins/${plugin}/logo.png`
-  }
-
-  const getUsingSpaces = (plugin) => {
-    return 0;
+  const getInfo = (plugin) => {
+    return plugins[plugin];
   }
 
   return {
     plugins,
     usePlugin,
-    getTimelineComponent,
-    getContentComponent,
-    getLogoUrl,
-    getUsingSpaces
+    getComponent,
+    getInfo
   }
 }

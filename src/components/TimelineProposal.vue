@@ -64,7 +64,11 @@ watchEffect(() => {
             {{ _n(proposal.scores[winningChoice]) }} {{ proposal.space.symbol }}
           </span>
         </div>
-        <component v-for="plugin in Object.keys(proposal.plugins)" :is="getTimelineComponent(plugin)" :proposal="proposal" />
+        <component
+          v-for="plugin in Object.keys(proposal.plugins)"
+          :is="getComponent(plugin, 'Timeline')"
+          :proposal="proposal"
+        />
       </div>
     </router-link>
   </Block>
