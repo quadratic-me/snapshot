@@ -680,12 +680,12 @@ watchEffect(async () => {
       @add="handleSubmitAddCategories"
     />
     <Suspense>
-    <ModalPlugins
-      :open="modalPluginsOpen"
-      :plugin="currentPlugin"
-      @close="modalPluginsOpen = false"
-      @add="handleSubmitAddPlugins"
-    />
+      <ModalPlugins
+        :open="modalPluginsOpen"
+        :plugin="currentPlugin"
+        @close="modalPluginsOpen = false"
+        @add="handleSubmitAddPlugins"
+      />
     </Suspense>
     <ModalValidation
       :open="modalValidationOpen"
