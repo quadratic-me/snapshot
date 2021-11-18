@@ -31,7 +31,7 @@ export default defineConfig({
         JSON.stringify(
           Object.fromEntries(
             fs.readdirSync('src/plugins', { withFileTypes: true })
-              .filter(file => file.isDirectory())
+              .filter(file => file.isDirectory() && !file.name.startsWith('_'))
               .map(dir => {
                 try {
                   return [
