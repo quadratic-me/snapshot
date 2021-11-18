@@ -3,14 +3,16 @@ import useGithubDiscussions from '..';
 
 const { sayHello } = useGithubDiscussions();
 
-defineProps({
+const props = defineProps({
     proposal: Object
 });
+
+const show = props.proposal.space.plugins?.GithubDiscussions?.showLinkInTimeline
+    && props.proposal.plugins?.GithubDiscussions?.nodeId
 </script>
 
 <template>
-    <div class="text-right">
-        {{ sayHello(proposal.title) }}
-        <UiButton>Open "{{ proposal.title }}" Github</UiButton>
+    <div class="text-right" v-if="show">
+        <UiButton>Open "{{ proposal.plugins?.GithubDiscussions?.nodeId }}" Github</UiButton>
     </div>
 </template>
