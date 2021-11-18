@@ -40,6 +40,7 @@
     "graphql-tag": "^2.12.4",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
+    "octokit": "^1.7.0",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "raw-loader": "^4.0.2",
@@ -78,7 +79,7 @@
     "walletlink": "^2.1.8"
   },
   "resolutions": {
-    "ansi-regex" : "^5.0.1",
+    "ansi-regex": "^5.0.1",
     "axios": "^0.21.1"
   },
   "license": "MIT",

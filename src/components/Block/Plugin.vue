@@ -1,41 +1,43 @@
 <script setup>
-defineProps(['plugin']);
+import { usePlugins } from '@/composables/usePlugins';
 
-function getLogoUrl(key) {
-  return `https://raw.githubusercontent.com/snapshot-labs/snapshot-plugins/master/src/plugins/${key}/logo.png`;
-}
+const props = defineProps(['plugin']);
+
+const { usePlugin, getLogoUrl, getUsingSpaces } = usePlugins();
+
+const { name, version, author } = await usePlugin(props.plugin);
 </script>
 
 <template>
   <Block>
     <div class="flex items-center mb-1">
       <a
-        :href="`https://github.com/snapshot-labs/snapshot-plugins/tree/master/src/plugins/${plugin.key}`"
+        :href="`https://github.com/snapshot-labs/snapshot/tree/master/src/plugins/${plugin}`"
         target="_blank"
         class="flex items-center"
       >
         <UiAvatar
           class="mr-2 mb-2"
-          :imgsrc="getLogoUrl(plugin.key)"
-          :seed="plugin.name.charCodeAt()"
+          :imgsrc="getLogoUrl(name)"
+          :seed="name.charCodeAt()"
           size="28"
         />
-        <h3 v-text="plugin.name" />
+        <h3 v-text="name" />
       </a>
-      <div class="ml-1">v{{ plugin.version }}</div>
+      <div class="ml-1">v{{ version }}</div>
     </div>
     <div class="text-color">
       <div>
         <a
-          :href="`https://github.com/${plugin.author}`"
+          :href="`https://github.com/${author}`"
           target="_blank"
           class="text-color"
         >
           <Icon name="github" class="mr-1" />
-          {{ plugin.author }}
+          {{ author }}
         </a>
       </div>
-      {{ $tc('inSpaces', [_n(plugin.spaces)]) }}
+      {{ $tc('inSpaces', [_n(getUsingSpaces(plugin))]) }}
     </div>
   </Block>
 </template>

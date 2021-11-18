@@ -87,6 +87,7 @@ export const PROPOSALS_QUERY = gql`
       author
       created
       choices
+      plugins
       space {
         id
         name

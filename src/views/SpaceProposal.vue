@@ -16,6 +16,7 @@ import { useSharing } from '@/composables/useSharing';
 import { useWeb3 } from '@/composables/useWeb3';
 import { useClient } from '@/composables/useClient';
 import { useApp } from '@/composables/useApp';
+import { usePlugins } from '@/composables/usePlugins';
 
 const props = defineProps({
   spaceId: String,
@@ -31,6 +32,7 @@ const { web3 } = useWeb3();
 const { send, clientLoading } = useClient();
 const { getExplore } = useApp();
 const notify = inject('notify');
+const { getContentComponent } = usePlugins();
 
 const id = route.params.id;
 
@@ -277,6 +279,13 @@ onMounted(async () => {
         :votes="votes"
         :strategies="strategies"
       />
+      <div v-if="loaded && proposal.plugins">
+        <component
+          v-for="plugin in Object.keys(proposal.plugins)"
+          :is="getContentComponent(plugin)"
+          :proposal="proposal"
+        ></component>
+      </div>
       <ProposalPluginsContent
         v-model:safeSnapInput="safeSnapInput"
         :id="id"
