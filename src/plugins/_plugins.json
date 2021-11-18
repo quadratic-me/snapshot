@@ -3,6 +3,7 @@
     "name": "GitHub Discussions",
     "author": "mktcode",
     "version": 0.1,
-    "website": "https://github.com/snapshot-labs/snapshot/blob/develop/src/plugins/GithubDiscussions/README.md"
+    "website": "https://github.com/snapshot-labs/snapshot/blob/develop/src/plugins/GithubDiscussions/README.md",
+    "icon": "https://raw.githubusercontent.com/snapshot-labs/snapshot/master/src/plugins/${plugin}/logo.png"
   }
 }
