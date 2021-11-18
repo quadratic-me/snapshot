@@ -94,6 +94,7 @@ export const PROPOSALS_QUERY = gql`
         members
         avatar
         symbol
+        plugins
       }
       scores_state
       scores
