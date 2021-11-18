@@ -16,7 +16,7 @@ export default defineConfig({
       }
     }),
     ViteComponents({
-      dirs: ['src/components', 'src/plugins'],
+      dirs: ['src/components'],
       directoryAsNamespace: true
     }),
     visualizer({
