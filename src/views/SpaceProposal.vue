@@ -32,7 +32,7 @@ const { web3 } = useWeb3();
 const { send, clientLoading } = useClient();
 const { getExplore } = useApp();
 const notify = inject('notify');
-const { getContentComponent } = usePlugins();
+const { getComponent } = usePlugins();
 
 const id = route.params.id;
 

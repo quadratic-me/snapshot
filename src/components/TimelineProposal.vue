@@ -9,7 +9,7 @@ const props = defineProps({
   profiles: Object
 });
 
-const { getTimelineComponent } = usePlugins();
+const { getComponent } = usePlugins();
 
 const body = computed(() => removeMd(props.proposal.body));
 
