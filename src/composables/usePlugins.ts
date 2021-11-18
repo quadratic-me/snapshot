@@ -15,7 +15,7 @@ export function usePlugins() {
 
   const getComponent = (plugin: string, component: string) => {
     return defineAsyncComponent(() =>
-      import(`../plugins/${plugin}/${component}.vue`)
+      import(`../plugins/${plugin}/components/${component}.vue`)
     );
   }
 

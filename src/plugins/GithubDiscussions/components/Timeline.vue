@@ -1,7 +1,7 @@
 <script setup>
-import usePlugin from './';
+import useGithubDiscussions from '..';
 
-const { sayHello } = usePlugin();
+const { sayHello } = useGithubDiscussions();
 
 defineProps({
     proposal: Object
