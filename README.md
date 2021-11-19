@@ -44,6 +44,14 @@ Use `http://localhost:3000/#/fabien.eth` for testing your code.
 
 By default your instance will connect to the hub at `https://testnet.snapshot.org`. To change that (or other values) you can create a `.env.local` and overwrite the values from `.env`.
 
+#### Plugins
+
+Spaces can adjust Snapshot to their needs, using plugins. Those plugins are part of this repository and built with regular Vue components and composables and some json.
+
+To bootstrap a new plugin, run `yarn run create-plugin MyPlugin` and read the comments in the generated files.
+
+If you need a new package dependency, just install it and include the update `/package.json` and `yarn.lock`.
+
 ## License
 
 [MIT](LICENSE).
