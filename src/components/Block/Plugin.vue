@@ -7,7 +7,7 @@ const info = getInfo(props.plugin);
 </script>
 
 <template>
-  <Block>
+  <Block class="hover-border">
     <div class="flex items-center mb-1">
       <a
         :href="info.website"
