@@ -2,14 +2,11 @@
 import { watchEffect, computed } from 'vue';
 import removeMd from 'remove-markdown';
 import { useUsername } from '@/composables/useUsername';
-import { usePlugins } from '@/composables/usePlugins';
 
 const props = defineProps({
   proposal: Object,
   profiles: Object
 });
-
-const { getComponent } = usePlugins();
 
 const body = computed(() => removeMd(props.proposal.body));
 
@@ -64,11 +61,6 @@ watchEffect(() => {
             {{ _n(proposal.scores[winningChoice]) }} {{ proposal.space.symbol }}
           </span>
         </div>
-        <component
-          v-for="plugin in Object.keys(proposal.plugins)"
-          :is="getComponent(plugin, 'Timeline')"
-          :proposal="proposal"
-        />
       </div>
     </router-link>
   </Block>
