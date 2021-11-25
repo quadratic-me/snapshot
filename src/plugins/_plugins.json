@@ -15,5 +15,21 @@
         "body": "link"
       }
     }
+  },
+  "SafeSnap": {
+    "name": "Gnosis SafeSnap",
+    "author": "",
+    "version": 0.1,
+    "website": "https://github.com/snapshot-labs/snapshot/blob/develop/src/plugins/_template/README.md",
+    "icon": "https://raw.githubusercontent.com/snapshot-labs/snapshot/develop/src/plugins/_template/logo.png",
+    "defaults": {
+      "space": {
+        "safes": {}
+      },
+      "proposal": {
+        "safe": "",
+        "txs": {}
+      }
+    }
   }
 }
