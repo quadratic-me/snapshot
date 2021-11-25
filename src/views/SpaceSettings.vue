@@ -15,6 +15,7 @@ import { useCopy } from '@/composables/useCopy';
 import { useWeb3 } from '@/composables/useWeb3';
 import { calcFromSeconds, calcToSeconds } from '@/helpers/utils';
 import { useClient } from '@/composables/useClient';
+import { usePlugins } from '@/composables/usePlugins';
 
 const props = defineProps({
   spaceId: String,
@@ -32,6 +33,7 @@ const { copyToClipboard } = useCopy();
 const { web3 } = useWeb3();
 const { send, clientLoading } = useClient();
 const notify = inject('notify');
+const { getInfo } = usePlugins();
 
 const currentSettings = ref({});
 const currentTextRecord = ref('');
@@ -112,13 +114,6 @@ const categoriesString = computed(() => {
 
 const { filteredPlugins } = useSearchFilters();
 const plugins = computed(() => filteredPlugins());
-
-function pluginName(key) {
-  const plugin = plugins.value.find(obj => {
-    return obj.key === key;
-  });
-  return plugin?.name;
-}
 
 async function handleSubmit() {
   if (isValid.value) {
@@ -615,24 +610,22 @@ watchEffect(async () => {
           <Block :title="$t('plugins')">
             <div v-if="form?.plugins">
               <div
-                v-for="(plugin, name, index) in form.plugins"
+                v-for="(plugin, key, index) in form.plugins"
                 :key="index"
                 class="mb-3 relative"
               >
-                <div v-if="pluginName(name)">
-                  <a
-                    @click="handleRemovePlugins(name)"
-                    class="absolute p-4 right-0"
-                  >
-                    <Icon name="close" size="12" />
-                  </a>
-                  <a
-                    @click="handleEditPlugins(name)"
-                    class="p-4 block border rounded-md"
-                  >
-                    <h4 v-text="pluginName(name)" />
-                  </a>
-                </div>
+                <a
+                  @click="handleRemovePlugins(key)"
+                  class="absolute p-4 right-0"
+                >
+                  <Icon name="close" size="12" />
+                </a>
+                <a
+                  @click="handleEditPlugins(key)"
+                  class="p-4 block border rounded-md"
+                >
+                  <h4 v-text="getInfo(key).name" />
+                </a>
               </div>
             </div>
             <UiButton @click="handleAddPlugins" class="block w-full">
