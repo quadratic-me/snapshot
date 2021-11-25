@@ -1,14 +1,7 @@
 import { defineAsyncComponent } from 'vue';
 import plugins from '@/plugins/_plugins.json';
-import { useApp } from '@/composables/useApp';
 
 export function usePlugins() {
-  const { explore } = useApp();
-
-  Object.keys(plugins).forEach(key => {
-    plugins[key].spaces = explore.value.plugins[key] ?? 0
-  })
-
   const usePlugin = async (plugin: string) =>
     (await import(`../plugins/${plugin}/index.ts`)).default();
 

@@ -1,7 +1,9 @@
 <script setup>
+import { useApp } from '@/composables/useApp';
 import { usePlugins } from '@/composables/usePlugins';
 
 const props = defineProps(['plugin']);
+const { explore } = useApp();
 const { getInfo } = usePlugins();
 const info = getInfo(props.plugin);
 </script>
@@ -35,7 +37,7 @@ const info = getInfo(props.plugin);
           {{ info.author }}
         </a>
       </div>
-      {{ $tc('inSpaces', [_n(info.spaces)]) }}
+      {{ $tc('inSpaces', [_n(explore.plugins[plugin])]) }}
     </div>
   </Block>
 </template>
