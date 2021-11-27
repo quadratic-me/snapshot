@@ -14,6 +14,7 @@ import '@/style.scss';
 import { apolloClient } from '@/helpers/apollo';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import VueTippy from 'vue-tippy';
+import { store } from '@/store';
 
 const app = createApp({
   setup() {
@@ -23,6 +24,7 @@ const app = createApp({
 })
   .use(i18n)
   .use(router)
+  .use(store)
   .use(LockPlugin, options)
   .use(VueTippy, {
     defaultProps: { delay: [400, null] },

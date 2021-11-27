@@ -4,18 +4,25 @@ import { useRoute } from 'vue-router';
 import { useModal } from '@/composables/useModal';
 import { useDomain } from '@/composables/useDomain';
 import { useApp } from '@/composables/useApp';
-import { useWeb3 } from '@/composables/useWeb3';
+// import { useWeb3 } from '@/composables/useWeb3';
 import { useTxStatus } from '@/composables/useTxStatus';
 import { useUserSkin } from '@/composables/useUserSkin';
 import { useClient } from '@/composables/useClient';
+import { useStore } from 'vuex';
+import UP from 'up-core-test';
+UP.config({
+  domain: 't.app.unipass.id', // UniPass ID domain (test)
+  protocol: 'https' // Protocol of URLs, default https
+});
 
 const { pendingCount } = useTxStatus();
 const { modalAccountOpen } = useModal();
 const { env, domain } = useDomain();
 const route = useRoute();
+const store = useStore();
 
 const { explore } = useApp();
-const { login, web3 } = useWeb3();
+// const { login, web3 } = useWeb3();
 const { toggleSkin, getSkinIcon } = useUserSkin();
 const { isGnosisSafe } = useClient();
 
@@ -28,7 +35,28 @@ const space = computed(() => {
 });
 
 function setTitle() {
-  document.title = space.value?.name ?? 'Snapshot';
+  document.title = space.value?.name ?? 'Quadratic';
+}
+
+async function login() {
+  loading.value = true;
+  const upid = await UP.connect({
+    email: true,
+    evmKeys: true
+  });
+
+  console.log(upid);
+
+  if (!upid.evmKeys) {
+    console.log(`User rejected the request for evm keys or doesn't have any`);
+  }
+  store.commit('setUpId', upid);
+  loading.value = false;
+  return upid;
+}
+
+async function logout() {
+  store.commit('reset');
 }
 
 async function handleLogin(connector) {
@@ -67,40 +95,27 @@ onMounted(() => setTitle());
               class="flex items-center"
               style="font-size: 24px; padding-top: 4px"
             >
-              snapshot
+              Quadratic
             </router-link>
           </div>
-          <div :key="web3.account">
-            <template v-if="$auth.isAuthenticated.value">
-              <UiButton
-                @click="modalAccountOpen = true"
-                :loading="web3.authLoading"
-                class="flex items-center float-left"
-              >
+          <div>
+            <template v-if="store.state.status">
+              <UiButton @click="logout()" class="flex items-center float-left">
                 <UiAvatar
-                  :imgsrc="
-                    web3.profile?.image ? _getUrl(web3.profile.image) : ''
-                  "
-                  :address="web3.account"
+                  :address="store.state.upid?.evmKeys[0] || ''"
                   size="18"
                   class="-mr-1 sm:mr-2 md:mr-2 lg:mr-2 xl:mr-2 -ml-1"
                 />
                 <span
-                  v-if="web3.profile?.name || web3.profile?.ens"
-                  v-text="web3.profile.name || web3.profile.ens"
-                  class="hidden sm:block"
-                />
-                <span
-                  v-else
-                  v-text="_shorten(web3.account)"
+                  v-text="store.state.upid?.username"
                   class="hidden sm:block"
                 />
               </UiButton>
             </template>
             <UiButton
-              v-if="!$auth.isAuthenticated.value"
-              @click="modalAccountOpen = true"
-              :loading="loading || web3.authLoading"
+              v-if="!store.state.status"
+              @click="login()"
+              :loading="loading"
             >
               <span class="hidden sm:block" v-text="$t('connectWallet')" />
               <Icon
